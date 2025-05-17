@@ -1,8 +1,6 @@
 # import it into $PROFILE
 # 
-# . $HOME/abw/abw.ps1
-
-$binDir = "C:\Program Files\abw\bin"
+$binDir = "**PATH**"
 $coreutilsPath = "$binDir\coreutils.exe"
 $env:Path = "$binDir;" + $env:Path
 

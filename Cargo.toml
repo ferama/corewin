@@ -10,18 +10,8 @@ license = "MIT"
 [dependencies]
 
 [package.metadata.wix]
-# Where the built installer should put the binary on the user’s machine
-install-dir = "%PROGRAMFILES%\\ABetterWindows"
 
-# Extra files to bundle (relative to project root).
-# They end up in the same folder as your main exe inside the MSI.
-files = [
-    { source = "bin\\doggo.exe", dest = "doggo.exe" },
-    { source = "bin\\find.exe", dest = "find.exe" },
-    { source = "bin\\hx.exe", dest = "hx.exe" },
-    { source = "bin\\jq.exe", dest = "jq.exe" },
-    { source = "bin\\rg.exe", dest = "rg.exe" },
-    { source = "bin\\wsw.exe", dest = "wsw.exe" },
-    { source = "bin\\xargs.exe", dest = "xargs.exe" },
-    { source = "bin\\yq.exe", dest = "yq.exe" },
-]
+[profile.release]
+codegen-units = 1
+lto = true
+strip = true
