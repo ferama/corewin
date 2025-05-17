@@ -21,6 +21,9 @@
         <Component Id="rgComponent" Guid="*">
           <File Id="rgFile" Name="rg.exe" Source="bin\\rg.exe" />
         </Component>
+        <Component Id="testingcommandlineComponent" Guid="*">
+          <File Id="testingcommandlineFile" Name="testing-commandline.exe" Source="bin\\testing-commandline.exe" />
+        </Component>
         <Component Id="wswComponent" Guid="*">
           <File Id="wswFile" Name="wsw.exe" Source="bin\\wsw.exe" />
         </Component>
@@ -39,6 +42,7 @@
       <ComponentRef Id="hxComponent" />
       <ComponentRef Id="jqComponent" />
       <ComponentRef Id="rgComponent" />
+      <ComponentRef Id="testingcommandlineComponent" />
       <ComponentRef Id="wswComponent" />
       <ComponentRef Id="xargsComponent" />
       <ComponentRef Id="yqComponent" />

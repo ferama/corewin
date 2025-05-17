@@ -1,6 +1,5 @@
-# import it into $PROFILE
-# 
 $binDir = "**PATH**"
+# $binDir = "C:\Program Files\abw\bin"
 $coreutilsPath = "$binDir\coreutils.exe"
 $env:Path = "$binDir;" + $env:Path
 
@@ -17,7 +16,12 @@ $fullList = & {
     $coreutilsList
     $extraList
 }
-$excludeList = @("more", "mkdir", "[")
+$excludeList = @(
+    "more", 
+    "mkdir", 
+    "[",
+    "uname" # breaks vscode ssh remote
+)
 
 $aliases = @{
     "grep"  = "rg"
