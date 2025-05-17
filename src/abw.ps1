@@ -41,6 +41,13 @@ foreach ($cmd in $fullList) {
 foreach ($cmd in $coreutilsList) {
     if ($excludeList.Contains($cmd)) { continue }
 
+    if ($cmd -eq "ls")  {
+        New-Item -path function:\ -name global:$cmd -value {
+            & $coreutilsPath $cmd --color  @args
+        }.GetNewClosure() | Out-Null    
+        continue
+    }
+
     New-Item -path function:\ -name global:$cmd -value {
         & $coreutilsPath $cmd @args
     }.GetNewClosure() | Out-Null

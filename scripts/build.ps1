@@ -60,6 +60,7 @@ Invoke-WebRequest -Uri https://github.com/mikefarah/yq/releases/download/v$($ver
 # cleanup unwanted
 Remove-Item $BinDir/testing-commandline.exe
 
+# heat is included in wix toolsets
 & heat dir $AssetsDir -cg ExtrasComponents -dr APPLICATIONFOLDER -srd -sreg -gg -out $wixDir\bins.wxs
 
 (Get-Content $wixDir\bins.wxs) | ForEach-Object {
