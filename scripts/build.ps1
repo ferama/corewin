@@ -1,7 +1,7 @@
 # Where to stage the download / extraction
-$WorkDir = Join-Path $PSScriptRoot "tmp"
+$WorkDir = Join-Path $PSScriptRoot "..\tmp"
 # Final destination for the binary
-$BinDir = Join-Path $PSScriptRoot "bin"
+$BinDir = Join-Path $PSScriptRoot "..\bin"
 
 # ---------------------------------------------------------------------------
 
@@ -46,4 +46,9 @@ DownloadArtifacts -Url "https://github.com/mr-karan/doggo/releases/download/v1.0
 Invoke-WebRequest -Uri https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-windows-amd64.exe -OutFile (Join-Path $BinDir "jq.exe")
 Invoke-WebRequest -Uri https://github.com/mikefarah/yq/releases/download/v4.45.4/yq_windows_amd64.exe -OutFile (Join-Path $BinDir "yq.exe")
 
+
+
+& "$PSScriptRoot/generate-wxs.ps1"
 Remove-Item $WorkDir -Recurse -Force
+
+

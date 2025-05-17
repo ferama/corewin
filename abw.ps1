@@ -2,7 +2,7 @@
 # 
 # . $HOME/abw/abw.ps1
 
-$binDir = "$HOME\abw\bin"
+$binDir = "C:\Program Files\abw\bin"
 $coreutilsPath = "$binDir\coreutils.exe"
 $env:Path = "$binDir;" + $env:Path
 
