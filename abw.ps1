@@ -2,18 +2,27 @@
 # 
 # . $HOME/abw/abw.ps1
 
-$coreutilsPath = "$HOME\abw\bin\coreutils.exe"
+$binDir = "$HOME\abw\bin"
+$coreutilsPath = "$binDir\coreutils.exe"
+$env:Path = "$binDir;" + $env:Path
+
 
 $coreutilsList = & $coreutilsPath --list |
          Where-Object { $_.Trim() } |
          ForEach-Object { $_.Trim() }
 
+# alias will be removed for this lists
 $extraList = @("curl")
 $fullList = & {
     $coreutilsList
     $extraList
 }
 $excludeList = @("more", "mkdir", "[")
+
+$createAliases = @{
+    "grep"  = "rg"
+    "which" = "where.exe"
+}
 
 # Remove aliases
 foreach ($cmd in $fullList) {
@@ -30,4 +39,8 @@ foreach ($cmd in $coreutilsList) {
     New-Item -path function:\ -name global:$cmd -value {
         & $coreutilsPath $cmd @args
     }.GetNewClosure() | Out-Null
+}
+
+$createAliases.GetEnumerator() | ForEach-Object {
+    Set-Alias -Name $_.Key -Value $_.Value
 }

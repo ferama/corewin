@@ -1,21 +1,5 @@
-<#
-.SYNOPSIS
-    Download and install uutils-coreutils v0.0.30 for Windows.
-
-.DESCRIPTION
-    • Downloads the ZIP asset for x86-64/MSVC.
-    • Extracts it to a temporary working directory.
-    • Copies coreutils.exe into a local “bin” directory that you can add to $Env:Path.
-#>
-
-# ----- Configuration ---------------------------------------------------------
-$Version        = "0.0.30"
-$Repo           = "uutils/coreutils"
-$Tag            = "$Version"
-$AssetFile      = "coreutils-$Version-x86_64-pc-windows-msvc.zip"
-
 # Where to stage the download / extraction
-$WorkDir        = Join-Path $PSScriptRoot "coreutils_tmp"
+$WorkDir        = Join-Path $PSScriptRoot "tmp"
 # Final destination for the binary
 $BinDir         = Join-Path $PSScriptRoot "bin"
 
@@ -24,30 +8,39 @@ $BinDir         = Join-Path $PSScriptRoot "bin"
 # Ensure folders exist
 $null = New-Item -ItemType Directory -Force -Path $WorkDir, $BinDir
 
-# Construct download URL
-$DownloadUrl = "https://github.com/$Repo/releases/download/$Tag/$AssetFile"
-$ZipPath     = Join-Path $WorkDir $AssetFile
+function DownloadArtifacts {
+    param (
+        [string]$Url
+    )
 
-Write-Host "Downloading $AssetFile ..."
-Invoke-WebRequest -Uri $DownloadUrl -OutFile $ZipPath
+    $AssetFile = [System.IO.Path]::GetFileName($Url)
 
-Write-Host "Extracting ..."
-Expand-Archive -Path $ZipPath -DestinationPath $WorkDir -Force
+    # Construct download URL
+    $ZipPath = Join-Path $WorkDir $AssetFile
 
-# Locate coreutils.exe in extraction tree
-$exe = Get-ChildItem -Path $WorkDir -Recurse -Filter "coreutils.exe" |
-       Select-Object -First 1
+    Write-Host "Downloading $Url ..."
+    Invoke-WebRequest -Uri $Url -OutFile $ZipPath
 
-if (-not $exe) {
-    throw "coreutils.exe not found after extraction."
+    Write-Host "Extracting ..."
+    Expand-Archive -Path $ZipPath -DestinationPath $WorkDir -Force
+
+    # Locate the specified executable in extraction tree
+    Get-ChildItem -Path $WorkDir -Recurse -Filter *.exe |
+        ForEach-Object { 
+            $ExecutableName = $_.Name
+            Write-Host "Copying $ExecutableName to $BinDir ..."
+
+            Copy-Item -Path $_.FullName -Destination (Join-Path $BinDir $ExecutableName) -Force
+        }
 }
 
-Write-Host "Copying coreutils.exe to $BinDir ..."
-Copy-Item -Path $exe.FullName -Destination (Join-Path $BinDir "coreutils.exe") -Force
+DownloadArtifacts -Url "https://github.com/uutils/coreutils/releases/download/0.0.30/coreutils-0.0.30-x86_64-pc-windows-msvc.zip"
+DownloadArtifacts -Url "https://github.com/uutils/findutils/releases/download/0.8.0/findutils-x86_64-pc-windows-msvc.zip"
+DownloadArtifacts -Url "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-pc-windows-msvc.zip"
 
-# Optional clean-up
+#DownloadArtifacts -Url "https://github.com/uutils/diffutils/releases/download/v0.4.2/diffutils-x86_64-pc-windows-msvc.zip"
+
+Invoke-WebRequest -Uri https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-windows-amd64.exe -OutFile (Join-Path $BinDir "jq.exe")
+Invoke-WebRequest -Uri https://github.com/mikefarah/yq/releases/download/v4.45.4/yq_windows_amd64.exe -OutFile (Join-Path $BinDir "yq.exe")
+
 Remove-Item $WorkDir -Recurse -Force
-
-Write-Host "coreutils.exe is now in: $BinDir"
-Write-Host "   Add that folder to your PATH, e.g.:"
-Write-Host '   [Environment]::SetEnvironmentVariable("Path", $Env:Path + ";' + $BinDir + '", "User")'
