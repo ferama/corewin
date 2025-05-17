@@ -12,12 +12,14 @@ $versions = @{
 # Where to stage the download / extraction
 $WorkDir = Join-Path $PSScriptRoot "..\tmp"
 # Final destination for the binary
-$BinDir = Join-Path $PSScriptRoot "..\bin"
+$AssetsDir = Join-Path $PSScriptRoot "..\assets"
+$BinDir = Join-Path $AssetsDir "bin"
+$wixDir = Join-Path $PSScriptRoot '..\wix'
 
 # ---------------------------------------------------------------------------
 
 # Ensure folders exist
-$null = New-Item -ItemType Directory -Force -Path $WorkDir, $BinDir
+$null = New-Item -ItemType Directory -Force -Path $WorkDir, $AssetsDir, $BinDir
 
 function DownloadArtifacts {
     param (
@@ -55,10 +57,16 @@ DownloadArtifacts -Url "https://github.com/mr-karan/doggo/releases/download/v$($
 Invoke-WebRequest -Uri https://github.com/jqlang/jq/releases/download/jq-$($versions['jq'])/jq-windows-amd64.exe -OutFile (Join-Path $BinDir "jq.exe")
 Invoke-WebRequest -Uri https://github.com/mikefarah/yq/releases/download/v$($versions['yq'])/yq_windows_amd64.exe -OutFile (Join-Path $BinDir "yq.exe")
 
-# # cleanup unwanted
+# cleanup unwanted
 Remove-Item $BinDir/testing-commandline.exe
 
-& "$PSScriptRoot/generate-wxs.ps1"
+& heat dir $AssetsDir -cg ExtrasComponents -dr APPLICATIONFOLDER -srd -sreg -gg -out $wixDir\bins.wxs
+
+(Get-Content $wixDir\bins.wxs) | ForEach-Object {
+        $_ -replace "SourceDir", "assets"
+
+} | Set-Content $wixDir\bins.wxs -Encoding UTF8
+
 Remove-Item $WorkDir -Recurse -Force
 
 
