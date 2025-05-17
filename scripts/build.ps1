@@ -46,7 +46,8 @@ DownloadArtifacts -Url "https://github.com/mr-karan/doggo/releases/download/v1.0
 Invoke-WebRequest -Uri https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-windows-amd64.exe -OutFile (Join-Path $BinDir "jq.exe")
 Invoke-WebRequest -Uri https://github.com/mikefarah/yq/releases/download/v4.45.4/yq_windows_amd64.exe -OutFile (Join-Path $BinDir "yq.exe")
 
-
+# cleanup unwanted
+Remove-Item $BinDir/testing-commandline.exe
 
 & "$PSScriptRoot/generate-wxs.ps1"
 Remove-Item $WorkDir -Recurse -Force

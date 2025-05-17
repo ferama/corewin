@@ -10,14 +10,16 @@ $coreutilsList = & $coreutilsPath --list |
          ForEach-Object { $_.Trim() }
 
 # alias will be removed for this lists
-$extraList = @("curl")
+$extraList = @(
+    "curl" # prefer curl.exe
+)
 $fullList = & {
     $coreutilsList
     $extraList
 }
 $excludeList = @("more", "mkdir", "[")
 
-$createAliases = @{
+$aliases = @{
     "grep"  = "rg"
     "which" = "where.exe"
     "dig" = "doggo.exe"
@@ -40,6 +42,6 @@ foreach ($cmd in $coreutilsList) {
     }.GetNewClosure() | Out-Null
 }
 
-$createAliases.GetEnumerator() | ForEach-Object {
+$aliases.GetEnumerator() | ForEach-Object {
     Set-Alias -Name $_.Key -Value $_.Value
 }
