@@ -22,6 +22,7 @@ $excludeList = @("more", "mkdir", "[")
 $createAliases = @{
     "grep"  = "rg"
     "which" = "where.exe"
+    "dig" = "doggo.exe"
 }
 
 # Remove aliases

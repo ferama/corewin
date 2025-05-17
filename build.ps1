@@ -1,7 +1,7 @@
 # Where to stage the download / extraction
-$WorkDir        = Join-Path $PSScriptRoot "tmp"
+$WorkDir = Join-Path $PSScriptRoot "tmp"
 # Final destination for the binary
-$BinDir         = Join-Path $PSScriptRoot "bin"
+$BinDir = Join-Path $PSScriptRoot "bin"
 
 # ---------------------------------------------------------------------------
 
@@ -37,6 +37,9 @@ function DownloadArtifacts {
 DownloadArtifacts -Url "https://github.com/uutils/coreutils/releases/download/0.0.30/coreutils-0.0.30-x86_64-pc-windows-msvc.zip"
 DownloadArtifacts -Url "https://github.com/uutils/findutils/releases/download/0.8.0/findutils-x86_64-pc-windows-msvc.zip"
 DownloadArtifacts -Url "https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep-14.1.1-x86_64-pc-windows-msvc.zip"
+DownloadArtifacts -Url "https://github.com/helix-editor/helix/releases/download/25.01.1/helix-25.01.1-x86_64-windows.zip"
+DownloadArtifacts -Url "https://github.com/ferama/wsw/releases/download/0.7.1/wsw-x86_64.zip"
+DownloadArtifacts -Url "https://github.com/mr-karan/doggo/releases/download/v1.0.5/doggo_1.0.5_Windows_x86_64.zip"
 
 #DownloadArtifacts -Url "https://github.com/uutils/diffutils/releases/download/v0.4.2/diffutils-x86_64-pc-windows-msvc.zip"
 
