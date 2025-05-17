@@ -16,6 +16,8 @@ $fullList = & {
     $coreutilsList
     $extraList
 }
+
+# no function will be created for item in this list
 $excludeList = @(
     "more", 
     "mkdir", 
@@ -23,6 +25,7 @@ $excludeList = @(
     "uname" # breaks vscode ssh remote
 )
 
+# alias
 $aliases = @{
     "grep"  = "rg"
     "which" = "where.exe"
