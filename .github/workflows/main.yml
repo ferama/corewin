@@ -47,14 +47,14 @@ jobs:
         run: >
           cargo wix -v --no-build --nocapture
           --target ${{ matrix.target }} 
-          --output target/${{ matrix.target }}/release/abw-${{ matrix.arch_name }}.msi
+          --output target/${{ matrix.target }}/release/corewin-${{ matrix.arch_name }}.msi
       
       - name: Upload built binaries
         uses: actions/upload-artifact@v4
         with:
-          name: abw-${{ matrix.arch_name }}
+          name: corewin-${{ matrix.arch_name }}
           path: |
-            target/${{ matrix.target }}/release/abw-${{ matrix.arch_name }}.msi
+            target/${{ matrix.target }}/release/corewin-${{ matrix.arch_name }}.msi
       
 
   release:
@@ -69,7 +69,7 @@ jobs:
 
       - name: Checksums
         run: |
-          for file in artifacts/abw-*/abw-*; do openssl dgst -sha256 -r "$file" | awk '{print $1}' > "${file}.sha256"; done
+          for file in artifacts/corewin-*/corewin-*; do openssl dgst -sha256 -r "$file" | awk '{print $1}' > "${file}.sha256"; done
           find artifacts
       
       - name: Create GitHub Release

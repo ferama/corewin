@@ -5,7 +5,7 @@ use std::{env, path::PathBuf};
 mod cli;
 use cli::*;
 
-const INIT_PROFILE: &str = include_str!("abw.ps1");
+const INIT_PROFILE: &str = include_str!("corewin.ps1");
 
 fn init() {
     match env::current_exe() {
