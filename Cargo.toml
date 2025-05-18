@@ -1,6 +1,6 @@
 [package]
 name = "abw"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["Marco Ferragina <marco.ferragina@gmail.com>"]
 readme = "README.md"
@@ -8,6 +8,7 @@ homepage = "https://github.com/ferama/abw"
 license = "MIT"
 
 [dependencies]
+clap = { version = "4", features = ["derive", "wrap_help"] }
 
 [package.metadata.wix]
 
