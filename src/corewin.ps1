@@ -1,5 +1,5 @@
-# $binDir = "**PATH**"
-$binDir = "C:\Program Files\corewin\bin"
+$binDir = "**PATH**"
+# $binDir = "C:\Program Files\corewin\bin"
 $coreutilsPath = "$binDir\coreutils.exe"
 $coreWinLocalDir = "$HOME\.corewin"
 $env:Path = "$binDir;" + $env:Path
@@ -18,7 +18,7 @@ $fullList = & {
     $extraList
 }
 
-# no function will be created for item in this list
+# no links will be created for item in this list
 $excludeList = @(
     "more", 
     "mkdir", 
