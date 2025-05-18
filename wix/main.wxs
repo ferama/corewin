@@ -70,7 +70,7 @@
         <Package Id='*'
             Keywords='Installer'
             Manufacturer='Marco Ferragina'
-            InstallerVersion='450'
+            InstallerVersion='500'
             Languages='1033'
             Compressed='yes'
             InstallScope='perMachine'

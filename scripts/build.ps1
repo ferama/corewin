@@ -43,7 +43,8 @@ function DownloadGit {
     Write-Host "Extracting ..."
     Expand-Archive -Path $ZipPath -DestinationPath $WorkDir -Force
 
-    Copy-Item -Recurse -Path $WorkDir\mingw64\* -Destination $AssetsDir 2>$null
+    Copy-Item -Path $WorkDir\cmd\* -Destination $BinDir 2>$null
+    Copy-Item -Recurse -Path $WorkDir\mingw64 -Destination $AssetsDir 2>$null
     # Copy-Item -Path $WorkDir\mingw64\bin\* -Destination $BinDir
     
 }
@@ -85,7 +86,6 @@ Invoke-WebRequest -Uri https://github.com/mikefarah/yq/releases/download/v$($ver
 
 DownloadGit -Version $versions['git']
 
-
 # cleanup unwanted
 foreach ($item in $deleteList) {
     Remove-Item (Join-Path $AssetsDir $item)
@@ -100,5 +100,3 @@ foreach ($item in $deleteList) {
 } | Set-Content $wixDir\bins.wxs -Encoding UTF8
 
 Remove-Item $WorkDir -Recurse -Force
-
-

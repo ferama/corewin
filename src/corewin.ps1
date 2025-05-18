@@ -1,7 +1,10 @@
-$binDir = "**PATH**"
-# $binDir = "C:\Program Files\corewin\bin"
+# $binDir = "**PATH**"
+$binDir = "C:\Program Files\corewin\bin"
 $coreutilsPath = "$binDir\coreutils.exe"
+$coreWinLocalDir = "$HOME\.corewin"
 $env:Path = "$binDir;" + $env:Path
+
+$env:Path = "$coreWinLocalDir;" + $env:Path     # attach to the beginning
 
 
 $coreutilsList = & $coreutilsPath --list |
@@ -40,20 +43,21 @@ foreach ($cmd in $fullList) {
         Remove-Item Alias:$cmd -Force
     }
 }
-# Create coreutils aliases
+
+# Create local dir
+New-Item -ItemType Directory -Force -Path $coreWinLocalDir | Out-Null
+
+# Create coreutils links
 foreach ($cmd in $coreutilsList) {
     if ($excludeList.Contains($cmd)) { continue }
-
+    New-Item -Path (Join-Path $coreWinLocalDir "$cmd.exe") -ItemType SymbolicLink -Value $coreutilsPath -Force | Out-Null
+    
     if ($cmd -eq "ls")  {
         New-Item -path function:\ -name global:$cmd -value {
             & $coreutilsPath $cmd --color  @args
         }.GetNewClosure() | Out-Null    
         continue
     }
-
-    New-Item -path function:\ -name global:$cmd -value {
-        & $coreutilsPath $cmd @args
-    }.GetNewClosure() | Out-Null
 }
 
 $aliases.GetEnumerator() | ForEach-Object {
