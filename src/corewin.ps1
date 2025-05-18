@@ -3,9 +3,7 @@ $binDir = "C:\Program Files\corewin\bin"
 $coreutilsPath = "$binDir\coreutils.exe"
 $coreWinLocalDir = "$HOME\.corewin"
 $env:Path = "$binDir;" + $env:Path
-
-$env:Path = "$coreWinLocalDir;" + $env:Path     # attach to the beginning
-
+$env:Path = "$coreWinLocalDir;" + $env:Path
 
 $coreutilsList = & $coreutilsPath --list |
          Where-Object { $_.Trim() } |

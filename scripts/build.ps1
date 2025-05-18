@@ -10,6 +10,7 @@ $versions = @{
     "git" = "2.49.0"
 }
 
+# unwanted files to delete
 $deleteList = @(
     "bin/testing-commandline.exe"
 )
@@ -45,9 +46,8 @@ function DownloadGit {
 
     Copy-Item -Path $WorkDir\cmd\* -Destination $BinDir 2>$null
     Copy-Item -Recurse -Path $WorkDir\mingw64 -Destination $AssetsDir 2>$null
-    # Copy-Item -Path $WorkDir\mingw64\bin\* -Destination $BinDir
-    
 }
+
 function DownloadArtifacts {
     param (
         [string]$Url
@@ -94,9 +94,11 @@ foreach ($item in $deleteList) {
 # heat is included in wix toolsets
 & heat dir $AssetsDir -cg ExtrasComponents -dr APPLICATIONFOLDER -srd -sreg -gg -out $wixDir\bins.wxs
 
+# Fix the SourceDir to assets
 (Get-Content $wixDir\bins.wxs) | ForEach-Object {
         $_ -replace "SourceDir", "assets"
 
 } | Set-Content $wixDir\bins.wxs -Encoding UTF8
 
+# Remove the temp directory
 Remove-Item $WorkDir -Recurse -Force
