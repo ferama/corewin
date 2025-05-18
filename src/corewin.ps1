@@ -1,5 +1,5 @@
 $binDir = "**PATH**"
-# $binDir = "C:\Program Files\abw\bin"
+# $binDir = "C:\Program Files\corewin\bin"
 $coreutilsPath = "$binDir\coreutils.exe"
 $env:Path = "$binDir;" + $env:Path
 

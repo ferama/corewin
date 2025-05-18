@@ -60,7 +60,7 @@
 
     <Product
         Id='*'
-        Name='abw'
+        Name='corewin'
         UpgradeCode='B771A0D6-2CCF-48FF-B706-D5168342B108'
         Manufacturer='Marco Ferragina'
         Language='1033'
@@ -82,11 +82,11 @@
             DowngradeErrorMessage='A newer version of [ProductName] is already installed. Setup will now exit.'/>
 
         <Media Id='1' Cabinet='media1.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1'/>
-        <Property Id='DiskPrompt' Value='abw Installation'/>
+        <Property Id='DiskPrompt' Value='CoreWin Installation'/>
 
         <Directory Id='TARGETDIR' Name='SourceDir'>
             <Directory Id='$(var.PlatformProgramFilesFolder)' Name='PFiles'>
-                <Directory Id='APPLICATIONFOLDER' Name='abw'>
+                <Directory Id='APPLICATIONFOLDER' Name='corewin'>
                     <!--
                       Disabling the license sidecar file in the installer is a two step process:
 
@@ -115,9 +115,9 @@
                         <Component Id='binary0' Guid='*'>
                             <File
                                 Id='exe0'
-                                Name='abw.exe'
+                                Name='corewin.exe'
                                 DiskId='1'
-                                Source='$(var.CargoTargetBinDir)\abw.exe'
+                                Source='$(var.CargoTargetBinDir)\corewin.exe'
                                 KeyPath='yes'/>
                         </Component>
                     </Directory>
@@ -164,7 +164,7 @@
         <!--<Icon Id='ProductICO' SourceFile='wix\Product.ico'/>-->
         <!--<Property Id='ARPPRODUCTICON' Value='ProductICO' />-->
 
-        <Property Id='ARPHELPLINK' Value='https://github.com/ferama/abw'/>
+        <Property Id='ARPHELPLINK' Value='https://github.com/ferama/corewin'/>
         
         <UI>
             <UIRef Id='WixUI_FeatureTree'/>

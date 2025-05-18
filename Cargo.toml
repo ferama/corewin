@@ -4,7 +4,7 @@ version = "0.1.1"
 edition = "2024"
 authors = ["Marco Ferragina <marco.ferragina@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/ferama/abw"
+homepage = "https://github.com/ferama/corewin"
 license = "MIT"
 
 [dependencies]
