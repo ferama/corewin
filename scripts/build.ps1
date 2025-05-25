@@ -1,5 +1,5 @@
 $versions = @{
-    "coreutils"  = "0.0.30"
+    "coreutils"  = "0.1.0"
     "findutils" = "0.8.0"
     "ripgrep" = "14.1.1"
     "micro" = "2.0.14"
